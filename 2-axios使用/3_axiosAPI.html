@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.27.2/axios.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>基本使用</h2>
+        <button>发送GET请求</button>
+        <button>发送POST请求</button>
+        <button>发送PUT请求</button>
+        <button>发送DELETE请求</button>
+    </div>
+    <script>
+        // 发送GET请求
+        function sendGet() {
+            axios.request({
+                method: 'GET',
+                url: 'http://localhost:3000/comments'
+            }).then(response => {
+                console.log(response);
+            })
+        }
+
+        // 发送POST请求
+        function sendPost() {
+            axios.post(
+                'http://localhost:3000/comments',
+                {
+                    "body": "浙江温州浙江温州江南皮革厂倒闭啦！",
+                    "postId": 2
+                }
+            ).then(response => {
+                console.log(response);
+            })
+        }
+
+
+        let btns = document.querySelectorAll('button');
+        btns[0].addEventListener('click', sendGet);
+        btns[1].addEventListener('click', sendPost);
+        // btns[2].addEventListener('click', sendPut);
+        // btns[3].addEventListener('click', sendDelete);
+    </script>
+</body>
+
+</html>

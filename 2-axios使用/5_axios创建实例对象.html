@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.27.2/axios.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>基本使用</h2>
+        <button>发送GET请求</button>
+        <button>发送POST请求</button>
+    </div>
+    <script>
+        // 发送GET请求
+        function sendGet() {
+            const serverOne = axios.create({
+                baseURL: 'http://localhost:3000',
+                timeout: 2000
+            });
+            // 这里的实例对象obj与axios对象的功能几近相同
+            serverOne({
+                url: '/comments',
+            }).then(response => {
+                console.log(response);
+            })
+            // 这里假设创建第二个服务对象向第二台服务器请求数据（实例对象发送请求的优势）
+            const serverTwo = axios.create({
+                baseURL: 'http://localhost:3000',
+                timeout: 2000
+            })
+            // 这里也可以对实例对象使用axios的API方法
+            serverTwo.get('/posts').then(response => {
+                console.log(response);
+            })
+        }
+        let btns = document.querySelectorAll('button');
+        btns[0].addEventListener('click', sendGet);
+    </script>
+</body>
+
+</html>

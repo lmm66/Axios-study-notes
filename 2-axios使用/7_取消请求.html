@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.27.2/axios.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>基本使用</h2>
+        <button>发送GET请求</button>
+        <button>取消请求</button>
+    </div>
+    <script>
+        let btns = document.querySelectorAll('button');
+        let cancel = null;
+        function sendGet() {
+            // 检测上一次请求是否已经完成
+            if (cancel !== null) {
+                // 上次请求未结束，则取消上一次请求
+                cancel();
+            }
+            axios(
+                {
+                    method: 'GET',
+                    url: 'http://localhost:3000/posts',
+                    // 添加配置对象属性
+                    cancelToken: new axios.CancelToken(function (c) {
+                        cancel = c;
+                    })
+                }
+            ).then(response => {
+                console.log(response);
+                // 请求完成后
+                cancel = null;
+            });
+        }
+        btns[0].addEventListener('click', sendGet);
+        btns[1].onclick = function () {
+            cancel();
+        }
+    </script>
+</body>
+
+</html>
